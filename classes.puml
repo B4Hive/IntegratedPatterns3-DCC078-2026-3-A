@@ -1,0 +1,52 @@
+@startuml classDiagram
+
+hide members
+
+left to right direction
+
+package factories{
+
+  class SingletonFactoryMethod
+  interface AbstractFactory <<interface>>
+  class FactoryPF implements AbstractFactory
+  class FactoryPJ implements AbstractFactory
+
+  SingletonFactoryMethod --* "1" SingletonFactoryMethod : Singleton
+  SingletonFactoryMethod ..> AbstractFactory
+  Exception <.. SingletonFactoryMethod
+  Class <.. SingletonFactoryMethod
+  Object <.. SingletonFactoryMethod
+
+}
+
+SingletonFactoryMethod ..> pagamentos.Pagamento
+
+package contratos{
+
+  interface Contrato <<interface>>
+  class ContratoPF implements Contrato
+  class ContratoPJ implements Contrato
+
+  FactoryPF ..> ContratoPF
+  FactoryPJ ..> ContratoPJ
+
+}
+
+package documentos{
+
+  interface Documento <<interface>>
+  class DocmentoPF implements Documento
+  class DocumentoPJ implements Documento
+
+  FactoryPF ..> DocmentoPF
+  FactoryPJ ..> DocumentoPJ
+
+}
+
+class Cliente
+
+Cliente ..> AbstractFactory
+Cliente --* "1" Documento
+Cliente --* "1" Contrato
+
+@enduml
